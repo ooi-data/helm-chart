@@ -25,6 +25,10 @@ agent:
     value: ""
   - name: PREFECT__CLOUD__AGENT__LABELS
     value: "[]"
+  # A path to where the YAML template should be loaded from
+  # This yaml template should be in the Docker image of agent!
+  # - name: YAML_TEMPLATE
+  #   value: ""
   - name: JOB_MEM_REQUEST
     value: ""
   - name: JOB_MEM_LIMIT
