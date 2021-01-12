@@ -1,5 +1,4 @@
 {{ .Values.agent.enabled }}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,26 +31,19 @@ spec:
       - name: {{ template "ooi-data-harvester.fullname" . }}-prefect-agent
         image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
         imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
-        args:
-          - prefect agent start kubernetes
-        command:
-          - /bin/bash
-          - -c
+        command: ["/bin/bash", "-c"]
+        args: ["prefect agent kubernetes start"]
         resources:
           {{- toYaml .Values.agent.resources | nindent 12 }}
         env:
-          - name: NAMESPACE
-            value: {{ .Release.Namespace }}
-          - name: IMAGE_PULL_SECRETS
-            value: {{- toYaml .Values.agent.image.pullSecrets | nindent 8 }}
         {{- if .Values.agent.env }}
           {{- toYaml .Values.agent.env | nindent 12 }}
         {{- end }}
         livenessProbe:
-          failureThreshold: 2
           httpGet:
             path: /api/health
             port: 8080
           initialDelaySeconds: 40
           periodSeconds: 40
+          failureThreshold: 2
 {{- end }}
