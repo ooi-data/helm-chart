@@ -1,0 +1,57 @@
+{{ .Values.agent.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ooi-data-harvester.name" . }}-prefect-agent
+  labels:
+    app: {{ template "ooi-data-harvester.name" . }}
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "ooi-data-harvester.chart" . }}
+    component: prefect-agent
+spec:
+  replicas: {{ .Values.agent.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "ooi-data-harvester.name" . }}
+      release: {{ .Release.Name | quote }}
+      component: prefect-agent
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ template "ooi-data-harvester.name" . }}
+        release: {{ .Release.Name | quote }}
+        component: prefect-agent
+    spec:
+      imagePullSecrets:
+        {{- toYaml .Values.agent.image.pullSecrets | nindent 8 }}
+      containers:
+      - name: {{ template "ooi-data-harvester.fullname" . }}-prefect-agent
+        image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
+        imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
+        args:
+          - prefect agent start kubernetes
+        command:
+          - /bin/bash
+          - -c
+        resources:
+          {{- toYaml .Values.agent.resources | nindent 12 }}
+        env:
+          - name: NAMESPACE
+            value: {{ .Release.Namespace }}
+          - name: IMAGE_PULL_SECRETS
+            value: {{- toYaml .Values.agent.image.pullSecrets | nindent 8 }}
+        {{- if .Values.agent.env }}
+          {{- toYaml .Values.agent.env | nindent 12 }}
+        {{- end }}
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 40
+          periodSeconds: 40
+{{- end }}

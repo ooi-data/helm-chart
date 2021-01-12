@@ -1,0 +1,51 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: data-prefect-agent
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "ooi-data-harvester.name" . }}
+    release: {{ .Release.Name | quote }}
+    component: prefect-agent
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: data-prefect-agent
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "ooi-data-harvester.name" . }}
+    release: {{ .Release.Name | quote }}
+    component: prefect-agent
+rules:
+- apiGroups:
+  - batch
+  - extensions
+  resources:
+  - jobs
+  verbs:
+  - '*'
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: data-prefect-agent
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "ooi-data-harvester.name" . }}
+    release: {{ .Release.Name | quote }}
+    component: prefect-agent
+subjects:
+- kind: ServiceAccount
+  name: data-prefect-agent
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: data-prefect-agent

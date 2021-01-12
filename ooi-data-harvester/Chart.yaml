@@ -1,0 +1,10 @@
+apiVersion: v1
+name: ooi-data-harvester
+version: 0.0.1
+description: OOI Data Harvesting Services
+home: https://interactiveoceans.washington.edu
+sources:
+  - https://github.com/ooi-data/ooi-harvester
+maintainers:
+  - name: lsetiawan
+    email: landungs@uw.edu
