@@ -1,3 +1,7 @@
+---
+nameOverride: ooi-data-harvester
+fullnameOverride: ooi-data-harvester
+
 agent:
   enabled: true
   replicas: 1
