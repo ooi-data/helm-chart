@@ -1,0 +1,10 @@
+title: Interactive Oceans OOI Data Harvesting Service Helm charts for Kubernetes
+description: This site stores Helm chart tarballs for Interactive Oceans OOI Data Harvesting Service.
+theme: minima
+url: "https://ooi-data.github.io/helm-charts/"
+repo_name: helm-charts
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - .gitignore
