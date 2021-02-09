@@ -1,0 +1,5 @@
+charts:
+  - name: ooi-data-harvester
+    repo:
+      git: ooi-data/helm-charts
+      published: https://ooi-data.github.io/helm-charts/
