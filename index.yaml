@@ -2,6 +2,20 @@ apiVersion: v1
 entries:
   ooi-data-harvester:
   - apiVersion: v1
+    created: "2021-02-10T01:10:18.56665176Z"
+    description: OOI Data Harvesting Services
+    digest: 68a741fe5ac3728fd76f25451ffb21b33bae6c94b9e37f4c8bcd3ba70de78a3d
+    home: https://interactiveoceans.washington.edu
+    maintainers:
+    - email: landungs@uw.edu
+      name: lsetiawan
+    name: ooi-data-harvester
+    sources:
+    - https://github.com/ooi-data/ooi-harvester
+    urls:
+    - https://ooi-data.github.io/helm-charts/ooi-data-harvester-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
     created: "2021-02-09T15:43:57.719960789-08:00"
     description: OOI Data Harvesting Services
     digest: c1361b940832aa9c334d2e7017ca8b6e4f814da2492f8f6beaabf6ae521ee8a4
@@ -15,4 +29,4 @@ entries:
     urls:
     - https://ooi-data.github.io/helm-charts/ooi-data-harvester-0.1.0.tgz
     version: 0.1.0
-generated: "2021-02-09T15:43:57.719387211-08:00"
+generated: "2021-02-10T01:10:18.565987751Z"
