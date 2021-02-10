@@ -32,14 +32,7 @@ spec:
         image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
         imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
         command: ["/bin/bash", "-c"]
-        args: 
-          - prefect
-          - agent
-          - kubernetes
-          - start
-          {{- if .Values.agent.extraArgs }}
-            {{ toYaml .Values.agent.extraArgs | nindent 12 }}
-          {{- end }}
+        args: ["prefect agent kubernetes start"]
         resources:
           {{- toYaml .Values.agent.resources | nindent 12 }}
         env:
